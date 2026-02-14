@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mor Laini | Bonnets, Scrunchies, Bows & Perfumes</title>
+  <meta name="description" content="Mor Laini — cute girly bonnets, scrunchies, bows (and perfumes coming soon). Order & pay via Paybill." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #fff7fb;
+      --card: #ffffff;
+      --ink: #2b2233;
+      --muted: #6a5b75;
+
+      --pink: #ffd1e6;
+      --pink2:#ffb6d6;
+      --lilac:#e9dcff;
+      --cream:#fff4ec;
+      --line: rgba(43,34,51,.10);
+
+      --shadow: 0 12px 30px rgba(43,34,51,.08);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 500px at 15% 10%, var(--pink) 0%, transparent 55%),
+        radial-gradient(900px 500px at 85% 10%, var(--lilac) 0%, transparent 55%),
+        radial-gradient(900px 500px at 50% 110%, var(--cream) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    a{color:inherit}
+    .container{max-width:1100px;margin:0 auto;padding:0 18px}
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px; border:1px solid var(--line);
+      background:rgba(255,255,255,.65);
+      border-radius:999px; font-size:13px; color:var(--muted);
+      backdrop-filter: blur(8px);
+    }
+
+    header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,247,251,.65);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; align-items:baseline; gap:10px; text-decoration:none;
+    }
+    .brand h1{
+      margin:0;
+      font-family: "Playfair Display", serif;
+      font-size:22px; letter-spacing:.2px;
+    }
+    .brand span{
+      font-size:12px; color:var(--muted);
+    }
+    .navlinks{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+    .navlinks a{
+      text-decoration:none; font-size:14px; color:var(--muted);
+      padding:8px 10px; border-radius:999px;
+    }
+    .navlinks a:hover{background:rgba(255,255,255,.6)}
+    .cartBtn{
+      display:inline-flex; align-items:center; gap:10px;
+      border:none; cursor:pointer;
+      padding:10px 14px; border-radius:999px;
+      background: linear-gradient(135deg, var(--pink2), var(--lilac));
+      box-shadow: var(--shadow);
+      font-weight:600;
+    }
+    .badge{
+      min-width:22px; height:22px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius:999px; background:rgba(255,255,255,.8);
+      font-size:12px;
+    }
+
+    .hero{padding:42px 0 18px}
+    .heroGrid{
+      display:grid; gap:18px;
+      grid-template-columns: 1.2fr .8fr;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){ .heroGrid{grid-template-columns:1fr} }
+
+    .heroCard{
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:26px;
+      overflow:hidden;
+      position:relative;
+      backdrop-filter: blur(10px);
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-60px -60px auto auto;
+      width:240px; height:240px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, var(--pink2), transparent 65%);
+      opacity:.85;
+      transform: rotate(10deg);
+    }
+    .heroTitle{
+      font-family: "Playfair Display", serif;
+      font-size:44px; line-height:1.05;
+      margin:10px 0 10px;
+      position:relative;
+    }
+    .heroP{margin:0 0 18px; color:var(--muted); position:relative}
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; position:relative}
+    .btn{
+      border:none; cursor:pointer; text-decoration:none;
+      padding:12px 16px; border-radius:999px;
+      font-weight:600; display:inline-flex; gap:10px; align-items:center;
+    }
+    .btnPrimary{
+      background: linear-gradient(135deg, var(--pink2), var(--lilac));
+      box-shadow: var(--shadow);
+    }
+    .btnGhost{
+      background:rgba(255,255,255,.75);
+      border:1px solid var(--line);
+      color:var(--muted);
+    }
+
+    .miniCard{
+      background:rgba(255,255,255,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:18px;
+      display:grid; gap:12px;
+      backdrop-filter: blur(10px);
+    }
+    .miniCard h3{margin:0;font-size:16px}
+    .miniCard p{margin:0;color:var(--muted);font-size:14px}
+    .miniGrid{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+    @media (max-width: 420px){ .miniGrid{grid-template-columns:1fr} }
+
+    section{padding:18px 0}
+    .sectionHead{
+      display:flex; align-items:end; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-family:"Playfair Display", serif;
+      font-size:26px;
+    }
+    .sectionHead p{margin:0;color:var(--muted);font-size:14px}
+
+    .filters{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin:10px 0 14px;
+    }
+    .chip{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .chip.active{
+      background: linear-gradient(135deg, var(--pink), var(--lilac));
+      color:var(--ink);
+      font-weight:600;
+    }
+
+    .grid{
+      display:grid; gap:14px;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns: repeat(3, 1fr);} }
+    @media (max-width: 720px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+    @media (max-width: 420px){ .grid{grid-template-columns: 1fr;} }
+
+    .card{
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:14px;
+      display:grid; gap:10px;
+      backdrop-filter: blur(10px);
+    }
+    .thumb{
+      height:140px;
+      border-radius:14px;
+      border:1px dashed rgba(43,34,51,.18);
+      display:flex; align-items:center; justify-content:center;
+      background:
+        radial-gradient(120px 70px at 30% 30%, var(--pink) 0%, transparent 60%),
+        radial-gradient(120px 70px at 70% 60%, var(--lilac) 0%, transparent 60%),
+        rgba(255,255,255,.6);
+      font-size:40px;
+    }
+    .name{font-weight:600}
+    .meta{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .price{font-weight:700}
+    .tag{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--line);
+      padding:5px 9px; border-radius:999px;
+      background:rgba(255,255,255,.6);
+    }
+
+    .input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.78);
+      outline:none;
+      font-family: inherit;
+    }
+    textarea{min-height:92px; resize:vertical}
+
+    .two{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+    @media (max-width: 720px){ .two{grid-template-columns:1fr} }
+
+    .cartPanel{
+      background:rgba(255,255,255,.78);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      padding:16px;
+      backdrop-filter: blur(10px);
+    }
+    .cartItem{
+      display:grid; grid-template-columns: 1fr auto;
+      gap:10px;
+      padding:10px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .cartItem:last-child{border-bottom:none}
+    .qty{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      background:rgba(255,255,255,.7);
+    }
+    .qty button{
+      border:none; background:transparent; cursor:pointer;
+      font-size:16px; line-height:1;
+      padding:2px 6px;
+    }
+    .muted{color:var(--muted)}
+    .totals{
+      display:grid; gap:6px;
+      padding-top:12px;
+      border-top:1px solid var(--line);
+      margin-top:12px;
+      font-size:14px;
+    }
+    .totals div{display:flex; justify-content:space-between; gap:10px}
+    .totals strong{font-size:16px}
+
+    footer{padding:30px 0 40px; color:var(--muted); font-size:14px;}
+
+    .notice{
+      padding:12px 14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.75);
+      border-radius:14px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .success{
+      border-color: rgba(34,139,34,.25);
+      background: rgba(34,139,34,.08);
+      color: #1f5e1f;
+    }
+    .danger{
+      border-color: rgba(220,20,60,.25);
+      background: rgba(220,20,60,.07);
+      color: #7a1530;
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container">
+    <div class="nav">
+      <a class="brand" href="#home">
+        <h1>Mor Laini</h1>
+        <span>🎀 soft girly essentials</span>
+      </a>
+
+      <div class="navlinks">
+        <a href="#shop">Shop</a>
+        <a href="#checkout">Checkout</a>
+        <a href="#contact">Contact</a>
+
+        <button class="cartBtn" id="openCartBtn" type="button">
+          🛍️ Bag <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="home" class="container">
+  <section class="hero">
+    <div class="heroGrid">
+      <div class="heroCard">
+        <div class="pill">✨ Cute • Simple • Ready to order</div>
+        <h2 class="heroTitle">Soft, pretty pieces that make you feel *that girl* 💗</h2>
+        <p class="heroP">
+          Bonnets, scrunchies & bows — and perfumes coming soon.
+          Add to bag, checkout, and pay via Paybill.
+        </p>
+        <div class="ctaRow">
+          <a class="btn btnPrimary" href="#shop">Shop now 🎀</a>
+          <a class="btn btnGhost" href="#checkout">How to pay (Paybill) 💳</a>
+        </div>
+      </div>
+
+      <div class="miniCard">
+        <h3>Why girls love Mor Laini</h3>
+        <div class="miniGrid">
+          <div class="notice">🌸 Super cute styles<br><span class="muted">Soft + girly</span></div>
+          <div class="notice">🧵 Quality finishing<br><span class="muted">Made with care</span></div>
+          <div class="notice">🚚 Easy delivery<br><span class="muted">Nairobi + beyond</span></div>
+          <div class="notice">💬 Quick support<br><span class="muted">WhatsApp orders</span></div>
+        </div>
+        <div class="notice">
+          <strong>Perfumes:</strong> launching soon — join the list on WhatsApp 💗
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="sectionHead">
+      <div>
+        <h2>Shop</h2>
+        <p>Tap a category, add to bag, then checkout ✨</p>
+      </div>
+      <span class="pill">Prices in KES • Pay via Paybill</span>
+    </div>
+
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <section id="cart">
+    <div class="sectionHead">
+      <div>
+        <h2>Your Bag</h2>
+        <p class="muted">Adjust quantities, choose delivery, then checkout.</p>
+      </div>
+      <span class="pill">🛍️ Bag updates automatically</span>
+    </div>
+
+    <div class="cartPanel">
+      <div id="cartItems"></div>
+
+      <div class="two" style="margin-top:12px;">
+        <div>
+          <label class="muted">Delivery option</label>
+          <select id="deliverySelect">
+            <option value="0">Pick-up (Free) — KES 0</option>
+            <option value="200">Nairobi CBD rider — KES 200</option>
+            <option value="300">Within Nairobi — KES 300</option>
+            <option value="500">Outside Nairobi — KES 500</option>
+          </select>
+          <p class="muted" style="margin:8px 0 0;font-size:12px;">
+            You can edit these delivery prices later 💗
+          </p>
+        </div>
+
+        <div>
+          <div class="totals">
+            <div><span>Subtotal</span><span id="subtotal">KES 0</span></div>
+            <div><span>Delivery</span><span id="deliveryFee">KES 0</span></div>
+            <div><strong>Total</strong><strong id="total">KES 0</strong></div>
+          </div>
+          <div class="ctaRow" style="margin-top:12px;">
+            <a class="btn btnPrimary" href="#checkout">Proceed to checkout 💗</a>
+            <button class="btn btnGhost" type="button" id="clearCartBtn">Clear bag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="checkout">
+    <div class="sectionHead">
+      <div>
+        <h2>Checkout</h2>
+        <p class="muted">Fill details → Pay via Paybill → Confirm order.</p>
+      </div>
+      <span class="pill">🔒 Simple & manual confirmation</span>
+    </div>
+
+    <div class="two">
+      <div class="cartPanel">
+        <h3 style="margin:0 0 10px;">1) Your details</h3>
+
+        <div class="two">
+          <div>
+            <label class="muted">Full name</label>
+            <input class="input" id="custName" placeholder="e.g. Wanjiku A." />
+          </div>
+          <div>
+            <label class="muted">Phone number</label>
+            <input class="input" id="custPhone" placeholder="e.g. 07xx xxx xxx" />
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label class="muted">Delivery location / address</label>
+          <textarea id="custAddress" placeholder="e.g. Nairobi, Kasarani • Gate/house • Landmark"></textarea>
+        </div>
+
+        <div class="notice" style="margin-top:12px;">
+          Tip: Use a clear landmark so delivery is smooth 💗
+        </div>
+      </div>
+
+      <div class="cartPanel">
+        <h3 style="margin:0 0 10px;">2) Pay via Paybill</h3>
+
+        <div class="notice">
+          <div>
+            <strong>Paybill:</strong>
+            <span id="paybillText">714888</span>
+            <button class="chip" id="copyPaybill" type="button">Copy</button>
+          </div>
+          <div style="margin-top:6px;">
+            <strong>Account:</strong>
+            <span id="accountText">275965</span>
+            <button class="chip" id="copyAccount" type="button">Copy</button>
+          </div>
+          <div style="margin-top:6px;">
+            <strong>Amount:</strong> <span id="amountText">KES 0</span>
+          </div>
+        </div>
+
+        <ol class="muted" style="margin:12px 0 0; padding-left:18px; font-size:14px;">
+          <li>Open M-Pesa → <strong>Lipa na M-Pesa</strong> → <strong>Paybill</strong></li>
+          <li>Enter <strong>Paybill</strong> and <strong>Account</strong> shown above</li>
+          <li>Pay the <strong>Amount</strong> shown</li>
+          <li>Enter your <strong>M-Pesa transaction code</strong> below and confirm</li>
+        </ol>
+
+        <div style="margin-top:12px;">
+          <label class="muted">M-Pesa transaction code</label>
+          <input class="input" id="mpesaCode" placeholder="e.g. QWE12ABC34" />
+        </div>
+
+        <div class="ctaRow" style="margin-top:12px;">
+          <button class="btn btnPrimary" id="confirmBtn" type="button">Confirm order on WhatsApp ✅</button>
+        </div>
+
+        <div id="checkoutMsg" class="notice" style="margin-top:12px;">
+          Add items to your bag to see the amount here 💗
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sectionHead">
+      <div>
+        <h2>Contact</h2>
+        <p class="muted">Questions? Custom colors? Bulk orders? Text us 💌</p>
+      </div>
+      <span class="pill">📱 WhatsApp = fastest</span>
+    </div>
+
+    <div class="two">
+      <div class="cartPanel">
+        <h3 style="margin:0 0 10px;">WhatsApp</h3>
+        <p class="muted" style="margin:0;">
+          Orders will confirm via WhatsApp automatically 💗
+        </p>
+        <div class="notice" style="margin-top:10px;">
+          WhatsApp: <strong>0758 372 872</strong>
+        </div>
+      </div>
+
+      <div class="cartPanel">
+        <h3 style="margin:0 0 10px;">Instagram / TikTok</h3>
+        <p class="muted" style="margin:0;">
+          Add your handles here later for extra trust ✨
+        </p>
+        <div class="notice" style="margin-top:10px;">Example: <strong>@morlaini</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="notice">
+      <strong>Mor Laini</strong> 🎀
+      <span class="muted">• Bonnets • Scrunchies • Bows • Perfumes (coming soon)</span>
+      <br>
+      <span class="muted">© <span id="year"></span> Mor Laini. All rights reserved.</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+  // =========================
+  // YOUR BUSINESS DETAILS ✅
+  // =========================
+  const BUSINESS_NAME = "Mor Laini";
+  const PAYBILL_NUMBER = "714888";
+  const PAYBILL_ACCOUNT = "275965";
+  const WHATSAPP_NUMBER = "254758372872"; // from 0758372872
+
+  // Products (EDIT THIS LIST to add your goods)
+  const products = [
+    { id:"bonnet-1", name:"Satin Bonnet (Classic)", category:"Bonnets", price: 450, emoji:"🩷", tag:"Soft satin" },
+{ id:"bonnet-lilac", name:"Lilac Satin Bonnet", category:"Bonnets", price: 500, emoji:"💜", tag:"New drop" },
+{ id:"scrunchie-pinkset", name:"Pink Satin Scrunchies (Set of 3)", category:"Scrunchies", price: 350, emoji:"🌸", tag:"Bestie fave" },
+{ id:"bow-pearl", name:"Pearl Bow Clip", category:"Bows", price: 250, emoji:"✨", tag:"Pretty girl" },
+    { id:"bonnet-2", name:"Satin Bonnet (Extra Stretch)", category:"Bonnets", price: 550, emoji:"🎀", tag:"Comfy fit" },
+    { id:"scrunchie-1", name:"Fluffy Scrunchie", category:"Scrunchies", price: 150, emoji:"☁️", tag:"Cute & soft" },
+    { id:"scrunchie-2", name:"Satin Scrunchies (Set of 2)", category:"Scrunchies", price: 250, emoji:"✨", tag:"Shiny satin" },
+    { id:"bow-1", name:"Mini Bow Clip", category:"Bows", price: 200, emoji:"🎀", tag:"Everyday cute" },
+    { id:"bow-2", name:"Statement Bow", category:"Bows", price: 300, emoji:"💗", tag:"Extra girly" },
+    { id:"perfume-1", name:"Perfumes (Coming Soon)", category:"Perfumes", price: 0, emoji:"🧴", tag:"Coming soon" },
+  ];
+
+  const categories = ["All", ...new Set(products.map(p => p.category))];
+
+  // Cart: { productId: qty }
+  let cart = JSON.parse(localStorage.getItem("morlaini_cart") || "{}");
+  let activeCategory = "All";
+
+  const el = (id) => document.getElementById(id);
+  const money = (n) => `KES ${Number(n).toLocaleString("en-KE")}`;
+
+  function saveCart(){ localStorage.setItem("morlaini_cart", JSON.stringify(cart)); }
+  function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+
+  function getSubtotal(){
+    let s = 0;
+    for (const [pid, qty] of Object.entries(cart)){
+      const p = products.find(x => x.id === pid);
+      if (!p) continue;
+      s += (p.price * qty);
+    }
+    return s;
+  }
+
+  function getDelivery(){ return Number(el("deliverySelect").value || 0); }
+  function getTotal(){ return getSubtotal() + getDelivery(); }
+
+  function renderFilters(){
+    const wrap = el("filters");
+    wrap.innerHTML = "";
+    categories.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = "chip" + (cat === activeCategory ? " active" : "");
+      btn.textContent = cat;
+      btn.type = "button";
+      btn.onclick = () => {
+        activeCategory = cat;
+        renderFilters();
+        renderProducts();
+      };
+      wrap.appendChild(btn);
+    });
+  }
+
+  function renderProducts(){
+    const grid = el("productGrid");
+    grid.innerHTML = "";
+
+    const list = products.filter(p => activeCategory === "All" ? true : p.category === activeCategory);
+
+    list.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+      thumb.textContent = p.emoji;
+
+      const name = document.createElement("div");
+      name.className = "name";
+      name.textContent = p.name;
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+
+      const left = document.createElement("div");
+      left.innerHTML = `<div class="price">${p.price > 0 ? money(p.price) : "Launching soon"}</div>
+                        <div class="muted" style="font-size:12px;margin-top:2px">${p.category}</div>`;
+
+      const right = document.createElement("div");
+      right.style.display = "grid";
+      right.style.gap = "8px";
+      right.style.justifyItems = "end";
+
+      const tag = document.createElement("div");
+      tag.className = "tag";
+      tag.textContent = p.tag;
+
+      const btn = document.createElement("button");
+      btn.className = "btn btnPrimary";
+      btn.type = "button";
+      btn.style.padding = "10px 12px";
+      btn.style.fontWeight = "700";
+
+      if (p.price === 0){
+        btn.textContent = "Notify me 💌";
+        btn.onclick = () => {
+          const msg = encodeURIComponent(`Hi ${BUSINESS_NAME} 💗 Please add me to the perfume launch list!`);
+          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+        };
+      } else {
+        btn.textContent = "Add to bag 🛍️";
+        btn.onclick = () => addToCart(p.id, 1);
+      }
+
+      right.appendChild(tag);
+      right.appendChild(btn);
+
+      meta.appendChild(left);
+      meta.appendChild(right);
+
+      card.appendChild(thumb);
+      card.appendChild(name);
+      card.appendChild(meta);
+
+      grid.appendChild(card);
+    });
+  }
+
+  function addToCart(pid, qty){
+    cart[pid] = (cart[pid] || 0) + qty;
+    if (cart[pid] <= 0) delete cart[pid];
+    saveCart();
+    renderCart();
+    renderCheckoutBox();
+  }
+
+  function clearCart(){
+    cart = {};
+    saveCart();
+    renderCart();
+    renderCheckoutBox();
+  }
+
+  function renderCart(){
+    el("cartCount").textContent = cartCount();
+
+    const wrap = el("cartItems");
+    wrap.innerHTML = "";
+
+    const entries = Object.entries(cart);
+    if (entries.length === 0){
+      wrap.innerHTML = `<div class="notice">Your bag is empty 🥺 Go to <a href="#shop"><strong>Shop</strong></a> and add something cute!</div>`;
+    } else {
+      entries.forEach(([pid, qty]) => {
+        const p = products.find(x => x.id === pid);
+        if (!p) return;
+
+        const row = document.createElement("div");
+        row.className = "cartItem";
+
+        const left = document.createElement("div");
+        left.innerHTML = `<div style="font-weight:600">${p.name}</div>
+                          <div class="muted" style="font-size:12px">${p.category} • ${money(p.price)} each</div>`;
+
+        const right = document.createElement("div");
+        right.style.display = "grid";
+        right.style.justifyItems = "end";
+        right.style.gap = "8px";
+
+        const qtyWrap = document.createElement("div");
+        qtyWrap.className = "qty";
+        const minus = document.createElement("button");
+        minus.textContent = "−";
+        minus.onclick = () => addToCart(pid, -1);
+
+        const num = document.createElement("span");
+        num.textContent = qty;
+
+        const plus = document.createElement("button");
+        plus.textContent = "+";
+        plus.onclick = () => addToCart(pid, +1);
+
+        qtyWrap.appendChild(minus);
+        qtyWrap.appendChild(num);
+        qtyWrap.appendChild(plus);
+
+        const lineTotal = document.createElement("div");
+        lineTotal.style.fontWeight = "700";
+        lineTotal.textContent = money(p.price * qty);
+
+        right.appendChild(qtyWrap);
+        right.appendChild(lineTotal);
+
+        row.appendChild(left);
+        row.appendChild(right);
+
+        wrap.appendChild(row);
+      });
+    }
+
+    el("subtotal").textContent = money(getSubtotal());
+    el("deliveryFee").textContent = money(getDelivery());
+    el("total").textContent = money(getTotal());
+
+    renderCheckoutBox();
+  }
+
+  function renderCheckoutBox(){
+    el("paybillText").textContent = PAYBILL_NUMBER;
+    el("accountText").textContent = PAYBILL_ACCOUNT;
+    el("amountText").textContent = money(getTotal());
+
+    const msg = el("checkoutMsg");
+    if (Object.keys(cart).length === 0){
+      msg.className = "notice";
+      msg.textContent = "Add items to your bag to see the total amount 💗";
+      el("amountText").textContent = money(0);
+    } else {
+      msg.className = "notice success";
+      msg.innerHTML = `Total to pay: <strong>${money(getTotal())}</strong><br><span class="muted">After paying, paste your M-Pesa code and confirm on WhatsApp 💗</span>`;
+    }
+  }
+
+  function buildOrderMessage(){
+    const name = el("custName").value.trim();
+    const phone = el("custPhone").value.trim();
+    const addr = el("custAddress").value.trim();
+    const code = el("mpesaCode").value.trim();
+    const delivery = el("deliverySelect").selectedOptions[0].textContent;
+
+    const items = Object.entries(cart).map(([pid, qty]) => {
+      const p = products.find(x => x.id === pid);
+      if (!p) return null;
+      return `- ${p.name} x${qty} (${money(p.price * qty)})`;
+    }).filter(Boolean).join("\n");
+
+    const text =
+`${BUSINESS_NAME} ORDER 💗
+
+Customer:
+Name: ${name}
+Phone: ${phone}
+Delivery: ${delivery}
+Address: ${addr}
+
+Items:
+${items}
+
+Totals:
+Subtotal: ${money(getSubtotal())}
+Delivery: ${money(getDelivery())}
+Total Paid: ${money(getTotal())}
+
+Payment Details:
+Paybill: ${PAYBILL_NUMBER}
+Account: ${PAYBILL_ACCOUNT}
+M-Pesa Code: ${code}
+
+(Please confirm my order 💕)`;
+
+    return text;
+  }
+
+  function copyText(text){
+    if (navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text);
+      return;
+    }
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+  }
+
+  // Events
+  el("deliverySelect").addEventListener("change", () => renderCart());
+  el("clearCartBtn").addEventListener("click", () => clearCart());
+
+  el("copyPaybill").addEventListener("click", () => copyText(PAYBILL_NUMBER));
+  el("copyAccount").addEventListener("click", () => copyText(PAYBILL_ACCOUNT));
+
+  el("confirmBtn").addEventListener("click", () => {
+    if (Object.keys(cart).length === 0){
+      el("checkoutMsg").className = "notice danger";
+      el("checkoutMsg").textContent = "Your bag is empty — please add items first 🥺";
+      return;
+    }
+    const name = el("custName").value.trim();
+    const phone = el("custPhone").value.trim();
+    const addr = el("custAddress").value.trim();
+    const code = el("mpesaCode").value.trim();
+
+    if (!name || !phone || !addr || !code){
+      el("checkoutMsg").className = "notice danger";
+      el("checkoutMsg").textContent = "Please fill in: name, phone, address, and M-Pesa code 💗";
+      return;
+    }
+
+    const msg = encodeURIComponent(buildOrderMessage());
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
+
+    el("checkoutMsg").className = "notice success";
+    el("checkoutMsg").textContent = "Sent! 💗 If WhatsApp didn’t open, check pop-ups or try again.";
+  });
+
+  el("openCartBtn").addEventListener("click", () => {
+    document.querySelector("#cart").scrollIntoView({behavior:"smooth"});
+  });
+
+  // Init
+  el("year").textContent = new Date().getFullYear();
+  renderFilters();
+  renderProducts();
+  renderCart();
+</script>
+</body>
+</html>
+
+
