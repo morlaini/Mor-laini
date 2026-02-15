@@ -533,16 +533,28 @@
 
   // Products (EDIT THIS LIST to add your goods)
   const products = [
-    { id:"bonnet-1", name:"Satin Bonnet (Classic)", category:"Bonnets", price: 450, emoji:"🩷", tag:"Soft satin" },
-{ id:"bonnet-lilac", name:"Lilac Satin Bonnet", category:"Bonnets", price: 500, emoji:"💜", tag:"New drop" },
-{ id:"scrunchie-pinkset", name:"Pink Satin Scrunchies (Set of 3)", category:"Scrunchies", price: 350, emoji:"🌸", tag:"Bestie fave" },
-{ id:"bow-pearl", name:"Pearl Bow Clip", category:"Bows", price: 250, emoji:"✨", tag:"Pretty girl" },
-    { id:"bonnet-2", name:"Satin Bonnet (Extra Stretch)", category:"Bonnets", price: 550, emoji:"🎀", tag:"Comfy fit" },
-    { id:"scrunchie-1", name:"Fluffy Scrunchie", category:"Scrunchies", price: 150, emoji:"☁️", tag:"Cute & soft" },
-    { id:"scrunchie-2", name:"Satin Scrunchies (Set of 2)", category:"Scrunchies", price: 250, emoji:"✨", tag:"Shiny satin" },
-    { id:"bow-1", name:"Mini Bow Clip", category:"Bows", price: 200, emoji:"🎀", tag:"Everyday cute" },
-    { id:"bow-2", name:"Statement Bow", category:"Bows", price: 300, emoji:"💗", tag:"Extra girly" },
-    { id:"perfume-1", name:"Perfumes (Coming Soon)", category:"Perfumes", price: 0, emoji:"🧴", tag:"Coming soon" },
+
+  { id:"ndunge", name:"Ndunge" },
+  { id:"naserian", name:"Naserian" },
+  { id:"asha", name:"Asha" },
+  { id:"mollo", name:"Mollo" },
+  { id:"moraa", name:"Moraa" },
+  { id:"taji", name:"Taji" },
+  { id:"mongina", name:"Mong'ina" },
+  { id:"lulu", name:"Lulu" },
+  { id:"akinyi", name:"Akinyi" },
+  { id:"naliaka", name:"Naliaka" },
+  { id:"gweth", name:"Gweth" },
+  { id:"maridadi", name:"Maridadi" },
+  { id:"arya", name:"Arya" },
+  { id:"jahera", name:"Jahera" },
+  { id:"chebet", name:"Chebet" },
+  { id:"ntinyari", name:"Ntinyari" },
+  { id:"anaya", name:"Anaya" },
+  { id:"nyambura", name:"Nyambura" },
+  { id:"nkirote", name:"Nkirote" },
+  { id:"mor", name:"Mor" },
+  { id:"nafula", name:"Nafula" }
   ];
 
   const categories = ["All", ...new Set(products.map(p => p.category))];
@@ -588,77 +600,54 @@
   }
 
   function renderProducts(){
-    const grid = el("productGrid");
-    grid.innerHTML = "";
+    const card = document.createElement("div");
+card.className = "card";
 
-    const list = products.filter(p => activeCategory === "All" ? true : p.category === activeCategory);
+const thumb = document.createElement("div");
+thumb.className = "thumb";
 
-    list.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "card";
+if (p.image){
+  thumb.innerHTML = `<img src="${p.image}" alt="${p.name}">`;
+}
 
-      const thumb = document.createElement("div");
-      thumb.className = "thumb";
-      thumb.textContent = p.emoji;
+const name = document.createElement("div");
+name.className = "name";
+name.textContent = p.name;
 
-      const name = document.createElement("div");
-      name.className = "name";
-      name.textContent = p.name;
+const sizeSelect = document.createElement("select");
+sizeSelect.className = "input";
+sizeSelect.innerHTML = `
+  <option value="550">Normal Size – KES 550</option>
+  <option value="650">Large Size – KES 650</option>
+`;
 
-      const meta = document.createElement("div");
-      meta.className = "meta";
+const btn = document.createElement("button");
+btn.className = "btn btnPrimary";
+btn.textContent = "Add to Bag";
+btn.onclick = () => {
+  const selectedPrice = Number(sizeSelect.value);
+  addToCart(p.id, 1, selectedPrice, p.name);
+};
 
-      const left = document.createElement("div");
-      left.innerHTML = `<div class="price">${p.price > 0 ? money(p.price) : "Launching soon"}</div>
-                        <div class="muted" style="font-size:12px;margin-top:2px">${p.category}</div>`;
+card.appendChild(thumb);
+card.appendChild(name);
+card.appendChild(sizeSelect);
+card.appendChild(btn);
 
-      const right = document.createElement("div");
-      right.style.display = "grid";
-      right.style.gap = "8px";
-      right.style.justifyItems = "end";
+grid.appendChild(card);
 
-      const tag = document.createElement("div");
-      tag.className = "tag";
-      tag.textContent = p.tag;
+  function addToCart(pid, qty, price, name){
+  const key = pid + "-" + price;
 
-      const btn = document.createElement("button");
-      btn.className = "btn btnPrimary";
-      btn.type = "button";
-      btn.style.padding = "10px 12px";
-      btn.style.fontWeight = "700";
-
-      if (p.price === 0){
-        btn.textContent = "Notify me 💌";
-        btn.onclick = () => {
-          const msg = encodeURIComponent(`Hi ${BUSINESS_NAME} 💗 Please add me to the perfume launch list!`);
-          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, "_blank");
-        };
-      } else {
-        btn.textContent = "Add to bag 🛍️";
-        btn.onclick = () => addToCart(p.id, 1);
-      }
-
-      right.appendChild(tag);
-      right.appendChild(btn);
-
-      meta.appendChild(left);
-      meta.appendChild(right);
-
-      card.appendChild(thumb);
-      card.appendChild(name);
-      card.appendChild(meta);
-
-      grid.appendChild(card);
-    });
+  if (!cart[key]){
+    cart[key] = { qty: 0, price: price, name: name };
   }
 
-  function addToCart(pid, qty){
-    cart[pid] = (cart[pid] || 0) + qty;
-    if (cart[pid] <= 0) delete cart[pid];
-    saveCart();
-    renderCart();
-    renderCheckoutBox();
-  }
+  cart[key].qty += qty;
+
+  saveCart();
+  renderCart();
+}
 
   function clearCart(){
     cart = {};
@@ -674,55 +663,39 @@
     wrap.innerHTML = "";
 
     const entries = Object.entries(cart);
-    if (entries.length === 0){
-      wrap.innerHTML = `<div class="notice">Your bag is empty 🥺 Go to <a href="#shop"><strong>Shop</strong></a> and add something cute!</div>`;
-    } else {
-      entries.forEach(([pid, qty]) => {
-        const p = products.find(x => x.id === pid);
-        if (!p) return;
 
-        const row = document.createElement("div");
-        row.className = "cartItem";
+if (entries.length === 0){
+  wrap.innerHTML = `<div class="notice">Your bag is empty 🥺</div>`;
+} else {
+  entries.forEach(([key, item]) => {
 
-        const left = document.createElement("div");
-        left.innerHTML = `<div style="font-weight:600">${p.name}</div>
-                          <div class="muted" style="font-size:12px">${p.category} • ${money(p.price)} each</div>`;
+    const row = document.createElement("div");
+    row.className = "cartItem";
 
-        const right = document.createElement("div");
-        right.style.display = "grid";
-        right.style.justifyItems = "end";
-        right.style.gap = "8px";
+    const left = document.createElement("div");
+    left.innerHTML = `
+      <div style="font-weight:600">${item.name}</div>
+      <div class="muted" style="font-size:12px">
+        ${item.price === 550 ? "Normal Size" : "Large Size"}
+      </div>
+    `;
 
-        const qtyWrap = document.createElement("div");
-        qtyWrap.className = "qty";
-        const minus = document.createElement("button");
-        minus.textContent = "−";
-        minus.onclick = () => addToCart(pid, -1);
+    const right = document.createElement("div");
+    right.style.fontWeight = "700";
+    right.textContent = `KES ${item.price * item.qty}`;
 
-        const num = document.createElement("span");
-        num.textContent = qty;
-
-        const plus = document.createElement("button");
-        plus.textContent = "+";
-        plus.onclick = () => addToCart(pid, +1);
-
-        qtyWrap.appendChild(minus);
-        qtyWrap.appendChild(num);
-        qtyWrap.appendChild(plus);
-
-        const lineTotal = document.createElement("div");
-        lineTotal.style.fontWeight = "700";
-        lineTotal.textContent = money(p.price * qty);
-
-        right.appendChild(qtyWrap);
-        right.appendChild(lineTotal);
-
-        row.appendChild(left);
-        row.appendChild(right);
-
-        wrap.appendChild(row);
-      });
-    }
+    row.appendChild(left);
+    row.appendChild(right);
+    wrap.appendChild(row);
+  });
+}
+function getSubtotal(){
+  let s = 0;
+  for (const item of Object.values(cart)){
+    s += item.price * item.qty;
+  }
+  return s;
+}
 
     el("subtotal").textContent = money(getSubtotal());
     el("deliveryFee").textContent = money(getDelivery());
