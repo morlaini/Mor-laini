@@ -8,30 +8,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
+:root{
+  --pink:#ffd1e6;
+  --pink2:#ffb6d6;
+  --bg:#fff7fb;
+  --text:#2b2233;
+}
+
 body{
   margin:0;
   font-family:Poppins,sans-serif;
-  background:#fff7fb;
-  color:#2b2233;
+  background:linear-gradient(135deg,#ffe6f2,#f4e6ff);
+  color:var(--text);
 }
 
-.container{max-width:1100px;margin:auto;padding:20px;}
+.container{max-width:1200px;margin:auto;padding:20px;}
 
 h1{
   font-family:"Playfair Display",serif;
   text-align:center;
+  margin-bottom:10px;
 }
 
 .tabs{
   display:flex;
   justify-content:center;
   gap:10px;
-  margin:20px 0;
+  margin:25px 0;
   flex-wrap:wrap;
 }
 
 .tabs button{
-  background:#ffd1e6;
+  background:var(--pink);
   border:none;
   padding:8px 16px;
   border-radius:999px;
@@ -42,56 +50,99 @@ h1{
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
+  gap:25px;
 }
 
 .card{
   background:white;
-  padding:15px;
-  border-radius:16px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.05);
+  padding:18px;
+  border-radius:20px;
   text-align:center;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+  transition:transform 0.2s ease;
+}
+
+.card:hover{
+  transform:translateY(-4px);
 }
 
 .thumb{
-  height:200px;
+  height:220px;
   overflow:hidden;
-  border-radius:12px;
-  margin-bottom:10px;
+  border-radius:16px;
+  margin-bottom:12px;
 }
 
 .thumb img{
   width:100%;
   height:100%;
   object-fit:cover;
+  transition:transform 0.4s ease;
+}
+
+.thumb:hover img{
+  transform:scale(1.08);
 }
 
 button.primary{
-  padding:10px 15px;
+  padding:10px 18px;
   border:none;
   border-radius:999px;
-  background:#ffb6d6;
+  background:var(--pink2);
   cursor:pointer;
   font-weight:600;
+  margin-top:8px;
 }
 
 select{
   width:100%;
   padding:8px;
   margin:8px 0;
-  border-radius:8px;
+  border-radius:10px;
 }
 
 .cart, .checkout{
-  margin-top:40px;
+  margin-top:45px;
   background:white;
-  padding:20px;
-  border-radius:16px;
+  padding:25px;
+  border-radius:20px;
 }
 
-.strike{
-  text-decoration:line-through;
-  color:grey;
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.qty button{
+  border:none;
+  background:var(--pink);
+  border-radius:50%;
+  width:28px;
+  height:28px;
+  cursor:pointer;
+}
+
+.remove{
+  color:red;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.strike{text-decoration:line-through;color:grey;}
+
+input{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
 }
 </style>
 </head>
@@ -99,7 +150,7 @@ select{
 <body>
 
 <div class="container">
-<h1>Mor Laini</h1>
+<h1>Mor Laini 🎀</h1>
 
 <div class="tabs">
   <button onclick="setCategory('all')">All</button>
@@ -111,9 +162,9 @@ select{
 <div class="grid" id="productGrid"></div>
 
 <div class="cart">
-<h2>Your Bag</h2>
+<h2>Your Bag (<span id="bagCount">0</span>)</h2>
 <div id="cartItems"></div>
-<p><strong>Total: </strong> KES <span id="total">0</span></p>
+<p><strong>Total:</strong> KES <span id="total">0</span></p>
 </div>
 
 <div class="checkout">
@@ -121,22 +172,21 @@ select{
 <p><strong>Paybill:</strong> 714888</p>
 <p><strong>Account:</strong> 275965</p>
 
-<p>After paying, enter your M-Pesa code below:</p>
-<input type="text" id="mpesaCode" placeholder="Enter M-Pesa Code" style="width:100%;padding:8px;border-radius:8px;">
+<p>Enter your M-Pesa Code:</p>
+<input id="mpesaCode" placeholder="QWE123ABC">
 
 <br><br>
 
 <button class="primary" onclick="confirmOrder()">Confirm on WhatsApp</button>
-
 </div>
 
 </div>
 
 <script>
 
-const WHATSAPP_NUMBER = "254758372872";
-
+const WHATSAPP_NUMBER="254758372872";
 let currentCategory="all";
+let cart={};
 
 const products=[
 
@@ -162,120 +212,141 @@ const products=[
 { name:"Nafula", type:"bonnet", image:"images/nafula.png" },
 
 { name:"Satin Scrunchie", type:"scrunchie", image:"images/scrunchie.png" },
-
 { name:"Signature Bow", type:"bow", image:"images/bow.jpg" }
 
 ];
 
-let cart={};
-
 function setCategory(cat){
-  currentCategory=cat;
-  renderProducts();
+currentCategory=cat;
+renderProducts();
 }
 
 function renderProducts(){
-  const grid=document.getElementById("productGrid");
-  grid.innerHTML="";
+const grid=document.getElementById("productGrid");
+grid.innerHTML="";
 
-  products
-  .filter(p=>currentCategory==="all"||p.type===currentCategory)
-  .forEach(p=>{
+products
+.filter(p=>currentCategory==="all"||p.type===currentCategory)
+.forEach(p=>{
 
-    const card=document.createElement("div");
-    card.className="card";
+const card=document.createElement("div");
+card.className="card";
 
-    const thumb=document.createElement("div");
-    thumb.className="thumb";
-    const img=document.createElement("img");
-    img.src=p.image;
-    img.alt=p.name;
-    thumb.appendChild(img);
+const thumb=document.createElement("div");
+thumb.className="thumb";
+const img=document.createElement("img");
+img.src=p.image;
+thumb.appendChild(img);
 
-    const name=document.createElement("div");
-    name.innerText=p.name;
+const name=document.createElement("div");
+name.innerText=p.name;
 
-    card.appendChild(thumb);
-    card.appendChild(name);
+card.appendChild(thumb);
+card.appendChild(name);
 
-    if(p.type==="bonnet"){
-      const select=document.createElement("select");
-      select.innerHTML=`
-        <option value="550">Normal – KES 550</option>
-        <option value="650">Large – KES 650</option>
-      `;
-      const btn=document.createElement("button");
-      btn.className="primary";
-      btn.innerText="Add to Bag";
-      btn.onclick=()=>addToCart(p.name,Number(select.value));
-      card.appendChild(select);
-      card.appendChild(btn);
-    }
+if(p.type==="bonnet"){
+const select=document.createElement("select");
+select.innerHTML=`
+<option value="550">Normal – KES 550</option>
+<option value="650">Large – KES 650</option>`;
+const btn=document.createElement("button");
+btn.className="primary";
+btn.innerText="Add to Bag";
+btn.onclick=()=>addToCart(p.name,Number(select.value));
+card.appendChild(select);
+card.appendChild(btn);
+}
 
-    if(p.type==="scrunchie"){
-      const price=document.createElement("p");
-      price.innerHTML=`<strong>KES 80</strong> <span class="strike">100</span> 💕`;
-      const btn=document.createElement("button");
-      btn.className="primary";
-      btn.innerText="Add to Bag";
-      btn.onclick=()=>addToCart(p.name,80);
-      card.appendChild(price);
-      card.appendChild(btn);
-    }
+if(p.type==="scrunchie"){
+const price=document.createElement("p");
+price.innerHTML=`<strong>KES 80</strong> <span class="strike">100</span> 💕`;
+const btn=document.createElement("button");
+btn.className="primary";
+btn.innerText="Add to Bag";
+btn.onclick=()=>addToCart(p.name,80);
+card.appendChild(price);
+card.appendChild(btn);
+}
 
-    if(p.type==="bow"){
-      const price=document.createElement("p");
-      price.innerHTML=`<strong>KES 350</strong>`;
-      const btn=document.createElement("button");
-      btn.className="primary";
-      btn.innerText="Add to Bag";
-      btn.onclick=()=>addToCart(p.name,350);
-      card.appendChild(price);
-      card.appendChild(btn);
-    }
+if(p.type==="bow"){
+const price=document.createElement("p");
+price.innerHTML=`<strong>KES 350</strong>`;
+const btn=document.createElement("button");
+btn.className="primary";
+btn.innerText="Add to Bag";
+btn.onclick=()=>addToCart(p.name,350);
+card.appendChild(price);
+card.appendChild(btn);
+}
 
-    grid.appendChild(card);
-  });
+grid.appendChild(card);
+});
 }
 
 function addToCart(name,price){
-  if(!cart[name]){
-    cart[name]={qty:0,price:price};
-  }
-  cart[name].qty++;
-  renderCart();
+if(!cart[name]) cart[name]={qty:0,price:price};
+cart[name].qty++;
+renderCart();
+}
+
+function changeQty(name,delta){
+cart[name].qty+=delta;
+if(cart[name].qty<=0) delete cart[name];
+renderCart();
 }
 
 function renderCart(){
-  const cartItems=document.getElementById("cartItems");
-  const totalEl=document.getElementById("total");
-  cartItems.innerHTML="";
-  let total=0;
+const cartItems=document.getElementById("cartItems");
+const totalEl=document.getElementById("total");
+const bagCount=document.getElementById("bagCount");
 
-  Object.keys(cart).forEach(name=>{
-    const item=cart[name];
-    const div=document.createElement("div");
-    div.innerText=`${name} x${item.qty} - KES ${item.qty*item.price}`;
-    cartItems.appendChild(div);
-    total+=item.qty*item.price;
-  });
+cartItems.innerHTML="";
+let total=0;
+let count=0;
 
-  totalEl.innerText=total;
+Object.keys(cart).forEach(name=>{
+const item=cart[name];
+
+const row=document.createElement("div");
+row.className="cart-item";
+
+const left=document.createElement("div");
+left.innerHTML=`${name}<div class="remove" onclick="changeQty('${name}',-999)">Remove</div>`;
+
+const right=document.createElement("div");
+right.className="qty";
+right.innerHTML=`
+<button onclick="changeQty('${name}',-1)">-</button>
+${item.qty}
+<button onclick="changeQty('${name}',1)">+</button>
+<span>KES ${item.qty*item.price}</span>
+`;
+
+row.appendChild(left);
+row.appendChild(right);
+cartItems.appendChild(row);
+
+total+=item.qty*item.price;
+count+=item.qty;
+});
+
+totalEl.innerText=total;
+bagCount.innerText=count;
 }
 
 function confirmOrder(){
-  const code=document.getElementById("mpesaCode").value;
-  if(!code){alert("Enter M-Pesa code");return;}
+const code=document.getElementById("mpesaCode").value;
+if(!code){alert("Enter M-Pesa code");return;}
 
-  let message="Mor Laini Order 💗\n\n";
-  Object.keys(cart).forEach(name=>{
-    const item=cart[name];
-    message+=`${name} x${item.qty} - KES ${item.qty*item.price}\n`;
-  });
-  message+=`\nTotal Paid: KES ${document.getElementById("total").innerText}\n`;
-  message+=`M-Pesa Code: ${code}`;
+let message="Mor Laini Order 💗\n\n";
+Object.keys(cart).forEach(name=>{
+const item=cart[name];
+message+=`${name} x${item.qty} - KES ${item.qty*item.price}\n`;
+});
+message+=`\nTotal Paid: KES ${document.getElementById("total").innerText}\n`;
+message+=`M-Pesa Code: ${code}`;
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`);
+window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`);
 }
 
 renderProducts();
@@ -284,5 +355,3 @@ renderProducts();
 
 </body>
 </html>
-
-
