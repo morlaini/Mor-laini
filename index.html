@@ -24,27 +24,49 @@ body{
 
 .container{max-width:1200px;margin:auto;padding:20px;}
 
-h1{
-  font-family:"Playfair Display",serif;
-  text-align:center;
-  margin-bottom:10px;
-}
-
-.tabs{
+header{
   display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:25px 0;
-  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.tabs button{
-  background:var(--pink);
-  border:none;
-  padding:8px 16px;
+.brand{
+  font-family:"Playfair Display",serif;
+  font-size:24px;
+}
+
+nav a{
+  margin-left:20px;
+  text-decoration:none;
+  color:var(--text);
+}
+
+.hero{
+  background:white;
+  padding:60px 30px;
+  border-radius:24px;
+  text-align:center;
+  margin-top:30px;
+}
+
+.hero h1{
+  font-family:"Playfair Display",serif;
+  font-size:42px;
+}
+
+.button{
+  padding:12px 22px;
   border-radius:999px;
+  border:none;
   cursor:pointer;
-  font-weight:500;
+  font-weight:600;
+  margin-top:10px;
+}
+
+.primary{background:var(--pink2);}
+
+.section{
+  margin-top:60px;
 }
 
 .grid{
@@ -59,90 +81,51 @@ h1{
   border-radius:20px;
   text-align:center;
   box-shadow:0 10px 25px rgba(0,0,0,0.05);
-  transition:transform 0.2s ease;
-}
-
-.card:hover{
-  transform:translateY(-4px);
 }
 
 .thumb{
-  height:220px;
+  height:200px;
   overflow:hidden;
-  border-radius:16px;
-  margin-bottom:12px;
+  border-radius:14px;
+  margin-bottom:10px;
 }
 
 .thumb img{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition:transform 0.4s ease;
+  transition:0.4s;
 }
 
 .thumb:hover img{
   transform:scale(1.08);
 }
 
-button.primary{
-  padding:10px 18px;
-  border:none;
-  border-radius:999px;
-  background:var(--pink2);
-  cursor:pointer;
-  font-weight:600;
-  margin-top:8px;
-}
-
-select{
-  width:100%;
-  padding:8px;
-  margin:8px 0;
-  border-radius:10px;
-}
-
-.cart, .checkout{
-  margin-top:45px;
-  background:white;
-  padding:25px;
-  border-radius:20px;
-}
-
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
-}
-
-.qty{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.qty button{
-  border:none;
-  background:var(--pink);
-  border-radius:50%;
-  width:28px;
-  height:28px;
-  cursor:pointer;
-}
-
-.remove{
-  color:red;
-  cursor:pointer;
-  font-size:12px;
-}
-
-.strike{text-decoration:line-through;color:grey;}
-
-input{
+input, textarea, select{
   width:100%;
   padding:10px;
   border-radius:10px;
   border:1px solid #ddd;
+  margin-bottom:12px;
+}
+
+.cart-summary{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:20px;
+}
+
+.footer{
+  margin-top:60px;
+  text-align:center;
+}
+
+a.contact-link{
+  display:block;
+  margin:8px 0;
+  text-decoration:none;
+  color:var(--text);
 }
 </style>
 </head>
@@ -150,85 +133,86 @@ input{
 <body>
 
 <div class="container">
-<h1>Mor Laini 🎀</h1>
 
-<div class="tabs">
-  <button onclick="setCategory('all')">All</button>
-  <button onclick="setCategory('bonnet')">Bonnets</button>
-  <button onclick="setCategory('scrunchie')">Scrunchies</button>
-  <button onclick="setCategory('bow')">Bows</button>
-</div>
+<header>
+<div class="brand">Mor Laini 🎀</div>
+<nav>
+<a href="#home">Home</a>
+<a href="#shop">Shop</a>
+<a href="#checkout">Checkout</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
 
+<!-- HERO -->
+<section id="home" class="hero">
+<h1>Soft, pretty pieces that make you feel *that girl* 💗</h1>
+<p>Bonnets, scrunchies & bows — luxury made cute.</p>
+<button class="button primary" onclick="scrollToShop()">Shop Now</button>
+</section>
+
+<!-- SHOP -->
+<section id="shop" class="section">
+<h2>Shop</h2>
 <div class="grid" id="productGrid"></div>
+</section>
 
-<div class="cart">
-<h2>Your Bag (<span id="bagCount">0</span>)</h2>
+<!-- CHECKOUT -->
+<section id="checkout" class="section">
+<h2>Checkout</h2>
+
+<div class="cart-summary">
+<h3>Your Order</h3>
 <div id="cartItems"></div>
 <p><strong>Total:</strong> KES <span id="total">0</span></p>
 </div>
 
-<div class="checkout">
-<h2>Checkout</h2>
+<h3>Your Details</h3>
+<input id="custName" placeholder="Full Name">
+<input id="custPhone" placeholder="Phone Number">
+<textarea id="custAddress" placeholder="Delivery Location"></textarea>
+
+<h3>Paybill Instructions</h3>
 <p><strong>Paybill:</strong> 714888</p>
 <p><strong>Account:</strong> 275965</p>
 
-<p>Enter your M-Pesa Code:</p>
-<input id="mpesaCode" placeholder="QWE123ABC">
+<input id="mpesaCode" placeholder="Enter M-Pesa Transaction Code">
 
-<br><br>
+<button class="button primary" onclick="confirmOrder()">Confirm Order on WhatsApp</button>
+</section>
 
-<button class="primary" onclick="confirmOrder()">Confirm on WhatsApp</button>
-</div>
+<!-- CONTACT -->
+<section id="contact" class="section footer">
+<h2>Contact Us</h2>
+
+<a class="contact-link" href="mailto:lainimor@gmail.com">📧 lainimor@gmail.com</a>
+
+<a class="contact-link" href="tel:0758372872">📱 0758 372 872</a>
+
+<a class="contact-link" href="https://instagram.com/mor_laini" target="_blank">📸 @mor_laini</a>
+
+<a class="contact-link" href="https://wa.me/254758372872" target="_blank">💬 WhatsApp Us</a>
+
+</section>
 
 </div>
 
 <script>
-
-const WHATSAPP_NUMBER="254758372872";
-let currentCategory="all";
-let cart={};
+const WHATSAPP="254758372872";
 
 const products=[
-
-{ name:"Mor", type:"bonnet", image:"images/mor.png" },
-{ name:"Ndunge", type:"bonnet", image:"images/ndunge.png" },
-{ name:"Naserian", type:"bonnet", image:"images/naserian.png" },
-{ name:"Mollo", type:"bonnet", image:"images/mollo.png" },
-{ name:"Moraa", type:"bonnet", image:"images/moraa.png" },
-{ name:"Ntinyari", type:"bonnet", image:"images/ntinyari.png" },
-{ name:"Nyambura", type:"bonnet", image:"images/nyambura.png" },
-{ name:"Asha", type:"bonnet", image:"images/asha.png" },
-{ name:"Taji", type:"bonnet", image:"images/taji.png" },
-{ name:"Mongina", type:"bonnet", image:"images/mongina.png" },
-{ name:"Akinyi", type:"bonnet", image:"images/akinyi.png" },
-{ name:"Naliaka", type:"bonnet", image:"images/naliaka.png" },
-{ name:"Gweth", type:"bonnet", image:"images/gweth.png" },
-{ name:"Maridadi", type:"bonnet", image:"images/maridadi.png" },
-{ name:"Arya", type:"bonnet", image:"images/arya.png" },
-{ name:"Jahera", type:"bonnet", image:"images/jahera.png" },
-{ name:"Chebet", type:"bonnet", image:"images/chebet.png" },
-{ name:"Anaya", type:"bonnet", image:"images/anaya.png" },
-{ name:"Nkirote", type:"bonnet", image:"images/nkirote.png" },
-{ name:"Nafula", type:"bonnet", image:"images/nafula.png" },
-
-{ name:"Satin Scrunchie", type:"scrunchie", image:"images/scrunchie.png" },
-{ name:"Signature Bow", type:"bow", image:"images/bow.jpg" }
-
+{ name:"Mor Bonnet", priceNormal:550, priceLarge:650, image:"images/mor.png" },
+{ name:"Satin Scrunchie", price:80, image:"images/scrunchie.png" },
+{ name:"Signature Bow", price:350, image:"images/bow.jpg" }
 ];
 
-function setCategory(cat){
-currentCategory=cat;
-renderProducts();
-}
+let cart={};
 
 function renderProducts(){
 const grid=document.getElementById("productGrid");
 grid.innerHTML="";
 
-products
-.filter(p=>currentCategory==="all"||p.type===currentCategory)
-.forEach(p=>{
-
+products.forEach(p=>{
 const card=document.createElement("div");
 card.className="card";
 
@@ -244,37 +228,24 @@ name.innerText=p.name;
 card.appendChild(thumb);
 card.appendChild(name);
 
-if(p.type==="bonnet"){
+if(p.priceNormal){
 const select=document.createElement("select");
 select.innerHTML=`
 <option value="550">Normal – KES 550</option>
 <option value="650">Large – KES 650</option>`;
 const btn=document.createElement("button");
-btn.className="primary";
+btn.className="button primary";
 btn.innerText="Add to Bag";
 btn.onclick=()=>addToCart(p.name,Number(select.value));
 card.appendChild(select);
 card.appendChild(btn);
-}
-
-if(p.type==="scrunchie"){
+}else{
 const price=document.createElement("p");
-price.innerHTML=`<strong>KES 80</strong> <span class="strike">100</span> 💕`;
+price.innerHTML=`<strong>KES ${p.price}</strong>`;
 const btn=document.createElement("button");
-btn.className="primary";
+btn.className="button primary";
 btn.innerText="Add to Bag";
-btn.onclick=()=>addToCart(p.name,80);
-card.appendChild(price);
-card.appendChild(btn);
-}
-
-if(p.type==="bow"){
-const price=document.createElement("p");
-price.innerHTML=`<strong>KES 350</strong>`;
-const btn=document.createElement("button");
-btn.className="primary";
-btn.innerText="Add to Bag";
-btn.onclick=()=>addToCart(p.name,350);
+btn.onclick=()=>addToCart(p.name,p.price);
 card.appendChild(price);
 card.appendChild(btn);
 }
@@ -289,69 +260,63 @@ cart[name].qty++;
 renderCart();
 }
 
-function changeQty(name,delta){
-cart[name].qty+=delta;
-if(cart[name].qty<=0) delete cart[name];
-renderCart();
-}
-
 function renderCart(){
 const cartItems=document.getElementById("cartItems");
 const totalEl=document.getElementById("total");
-const bagCount=document.getElementById("bagCount");
-
 cartItems.innerHTML="";
 let total=0;
-let count=0;
 
 Object.keys(cart).forEach(name=>{
 const item=cart[name];
-
-const row=document.createElement("div");
-row.className="cart-item";
-
-const left=document.createElement("div");
-left.innerHTML=`${name}<div class="remove" onclick="changeQty('${name}',-999)">Remove</div>`;
-
-const right=document.createElement("div");
-right.className="qty";
-right.innerHTML=`
-<button onclick="changeQty('${name}',-1)">-</button>
-${item.qty}
-<button onclick="changeQty('${name}',1)">+</button>
-<span>KES ${item.qty*item.price}</span>
-`;
-
-row.appendChild(left);
-row.appendChild(right);
-cartItems.appendChild(row);
-
+const div=document.createElement("div");
+div.innerText=`${name} x${item.qty} - KES ${item.qty*item.price}`;
+cartItems.appendChild(div);
 total+=item.qty*item.price;
-count+=item.qty;
 });
 
 totalEl.innerText=total;
-bagCount.innerText=count;
 }
 
 function confirmOrder(){
+const name=document.getElementById("custName").value;
+const phone=document.getElementById("custPhone").value;
+const address=document.getElementById("custAddress").value;
 const code=document.getElementById("mpesaCode").value;
-if(!code){alert("Enter M-Pesa code");return;}
 
-let message="Mor Laini Order 💗\n\n";
-Object.keys(cart).forEach(name=>{
-const item=cart[name];
-message+=`${name} x${item.qty} - KES ${item.qty*item.price}\n`;
+if(!name||!phone||!address||!code){
+alert("Please fill all details");
+return;
+}
+
+let message=`Mor Laini Order 💗
+
+Name: ${name}
+Phone: ${phone}
+Location: ${address}
+
+Order:
+`;
+
+Object.keys(cart).forEach(item=>{
+const data=cart[item];
+message+=`${item} x${data.qty} - KES ${data.qty*data.price}\n`;
 });
-message+=`\nTotal Paid: KES ${document.getElementById("total").innerText}\n`;
-message+=`M-Pesa Code: ${code}`;
 
-window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`);
+message+=`\nTotal Paid: KES ${document.getElementById("total").innerText}
+M-Pesa Code: ${code}
+Paybill: 714888
+Account: 275965`;
+
+window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`);
+}
+
+function scrollToShop(){
+document.getElementById("shop").scrollIntoView({behavior:"smooth"});
 }
 
 renderProducts();
-
 </script>
 
 </body>
 </html>
+
